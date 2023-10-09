@@ -18,15 +18,18 @@
                     <label for="resultado">Entrada:</label>
 
                     <textarea class="form-control" id="inSQL" rows="3" required placeholder="749823456..."></textarea>
+                    <button class="btn btn-success mt-2 mb-2" type="" onclick="mostrarResultadoSQLTXT()">
+                        Conv Texto
+                    </button>
                     <button class="btn btn-success mt-2 mb-2" type="" onclick="mostrarResultadoSQL()">
-                        Convertir
+                        Conv Numeros
                     </button>
                     <button class="btn btn-danger mt-2 mb-2" type="" onclick="borrarResSQL()">
                         Borrar
                     </button>
 
-                    <textarea class="form-control" id="resultadoSQL" rows="1" required
-                        placeholder="749823456,..." readonly></textarea>
+                    <textarea class="form-control" id="resultadoSQL" rows="1" required placeholder="749823456,..."
+                        readonly></textarea>
                     <button type="button" class="btn btn-secondary" id="btnSQL" onclick="copiarAlPortapapelesSQL()">
                         Copiar
                     </button>
@@ -39,7 +42,8 @@
                     <h5 class="card-title text-center">Anginity</h5>
                     <label for="resultado">Entrada:</label>
 
-                    <textarea class="form-control" id="inAnginity" rows="3" required placeholder="-61313028 (29/03/2017-07/09/2018), SIN TRAFICO..."></textarea>
+                    <textarea class="form-control" id="inAnginity" rows="3" required
+                        placeholder="-61313028 (29/03/2017-07/09/2018), SIN TRAFICO..."></textarea>
                     <button class="btn btn-success mt-2 mb-2" type="" onclick="mostrarResultadoAnginity()">
                         Convertir
                     </button>
@@ -70,7 +74,11 @@
             var res = textoAStringConComas(entrada)
             document.getElementById("resultadoSQL").value = res;
         }
-
+        function mostrarResultadoSQLTXT() {
+            var entrada = document.getElementById("inSQL").value;
+            var res = separarPorLinea(entrada)
+            document.getElementById("resultadoSQL").value = res;
+        }
         function borrarResSQL() {
             document.getElementById("inSQL").value = "";
             document.getElementById("resultadoSQL").value = "";
@@ -108,16 +116,32 @@
             }
         }
         function textoAStringConComas(texto) {
-            // Dividimos el texto en líneas usando el salto de línea como separador
-            const lineas = texto.split('\n');
+            // Utilizamos una expresión regular para encontrar todos los números en el texto
+            const regex = /\d+/g;
 
-            // Filtramos las líneas que no estén vacías
-            const lineasFiltradas = lineas.filter(linea => linea.trim() !== '');
+            // Usamos el método match para encontrar todas las coincidencias en el texto
+            const coincidencias = texto.match(regex);
 
-            // Usamos join para unir las líneas con comas y creamos la cadena final
-            const resultado = lineasFiltradas.join(',');
+            // Si hay coincidencias, las retornamos como una cadena separada por comas sin espacios
+            if (coincidencias) {
+                return coincidencias.join(',');
+            } else {
+                // Si no hay coincidencias, retornamos una cadena vacía
+                return '';
+            }
+        }
+        function separarPorLinea(texto) {
+                // Utilizamos el método split para dividir el texto por saltos de línea
+                const lineas = texto.split('\n');
 
-            return resultado;
+                // Utilizamos map para eliminar los espacios en blanco al principio y final de cada línea
+                const lineasSinEspacios = lineas.map((linea) => linea.trim());
+
+                // Usamos el método join para unir las líneas en una cadena separada por comas
+                const resultado = lineasSinEspacios.join(',');
+
+                return resultado;
+            
         }
 
         function mostrarResultadoAnginity() {

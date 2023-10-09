@@ -1,0 +1,155 @@
+<!DOCTYPE html>
+<html lang="es">
+
+<head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Format TXT</title>
+    <!-- Agrega los enlaces a los archivos CSS de Bootstrap -->
+    <link href="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css" rel="stylesheet" />
+</head>
+
+<body>
+    <div class="row p-4">
+        <div class="col-sm-6 mb-3 mb-sm-0">
+            <div class="card">
+                <div class="card-body">
+                    <h5 class="card-title text-center">SQL nav</h5>
+                    <label for="resultado">Entrada:</label>
+
+                    <textarea class="form-control" id="inSQL" rows="3" required placeholder="749823456..."></textarea>
+                    <button class="btn btn-success mt-2 mb-2" type="" onclick="mostrarResultadoSQL()">
+                        Convertir
+                    </button>
+                    <button class="btn btn-danger mt-2 mb-2" type="" onclick="borrarResSQL()">
+                        Borrar
+                    </button>
+
+                    <textarea class="form-control" id="resultadoSQL" rows="1" required
+                        placeholder="749823456,..." readonly></textarea>
+                    <button type="button" class="btn btn-secondary" id="btnSQL" onclick="copiarAlPortapapelesSQL()">
+                        Copiar
+                    </button>
+                </div>
+            </div>
+        </div>
+        <div class="col-sm-6 mb-3 mb-sm-0">
+            <div class="card">
+                <div class="card-body">
+                    <h5 class="card-title text-center">Anginity</h5>
+                    <label for="resultado">Entrada:</label>
+
+                    <textarea class="form-control" id="inAnginity" rows="3" required placeholder="-61313028 (29/03/2017-07/09/2018), SIN TRAFICO..."></textarea>
+                    <button class="btn btn-success mt-2 mb-2" type="" onclick="mostrarResultadoAnginity()">
+                        Convertir
+                    </button>
+                    <button class="btn btn-danger mt-2 mb-2" type="" onclick="borrarResAnginity()">
+                        Borrar
+                    </button>
+
+                    <textarea class="form-control" id="resultadoAnginity" rows="1" required
+                        placeholder="'61313028','...'" readonly></textarea>
+                    <button type="button" class="btn btn-secondary" id="btnAnginity"
+                        onclick="copiarAlPortapapelesAnginity()">
+                        Copiar
+                    </button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Agrega los enlaces a los archivos JS de Bootstrap y jQuery -->
+    <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.5.3/dist/umd/popper.min.js"></script>
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
+
+    <!-- Script para mostrar el resultado -->
+    <script>
+        function mostrarResultadoSQL() {
+            var entrada = document.getElementById("inSQL").value;
+            var res = textoAStringConComas(entrada)
+            document.getElementById("resultadoSQL").value = res;
+        }
+
+        function borrarResSQL() {
+            document.getElementById("inSQL").value = "";
+            document.getElementById("resultadoSQL").value = "";
+        }
+
+        function copiarAlPortapapelesSQL() {
+            var resultado = document.getElementById("resultadoSQL");
+
+            resultado.select(); // Seleccionar el contenido del área de texto
+            document.execCommand("copy"); // Copiar el contenido al portapapeles
+
+            // Deseleccionar el contenido
+            resultado.setSelectionRange(0, 0);
+
+            // Cambiar el texto del botón temporalmente para indicar que se ha copiado
+            var botonCopiar = document.getElementById("btnSQL");
+            botonCopiar.textContent = "Copiado!";
+
+            // Restaurar el texto del botón después de un breve período
+            setTimeout(function () {
+                botonCopiar.textContent = "Copiar";
+            }, 2000); // Cambia este valor si deseas que el mensaje se muestre durante más o menos tiempo
+        }
+
+        function extraerNumeros(texto) {
+            const regex = /-\d+\s/g;
+            const numerosEncontrados = texto.match(regex);
+
+            if (numerosEncontrados) {
+                return numerosEncontrados
+                    .map((numero) => `'${numero.replace(/-|\s/g, "").trim()}'`)
+                    .join(",");
+            } else {
+                return "";
+            }
+        }
+        function textoAStringConComas(texto) {
+            // Dividimos el texto en líneas usando el salto de línea como separador
+            const lineas = texto.split('\n');
+
+            // Filtramos las líneas que no estén vacías
+            const lineasFiltradas = lineas.filter(linea => linea.trim() !== '');
+
+            // Usamos join para unir las líneas con comas y creamos la cadena final
+            const resultado = lineasFiltradas.join(',');
+
+            return resultado;
+        }
+
+        function mostrarResultadoAnginity() {
+            var entrada = document.getElementById("inAnginity").value;
+            var res = extraerNumeros(entrada);
+            document.getElementById("resultadoAnginity").value = res;
+        }
+
+        function borrarResAnginity() {
+            document.getElementById("inAnginity").value = "";
+            document.getElementById("resultadoAnginity").value = "";
+        }
+
+        function copiarAlPortapapelesAnginity() {
+            var resultado = document.getElementById("resultadoAnginity");
+
+            resultado.select(); // Seleccionar el contenido del área de texto
+            document.execCommand("copy"); // Copiar el contenido al portapapeles
+
+            // Deseleccionar el contenido
+            resultado.setSelectionRange(0, 0);
+
+            // Cambiar el texto del botón temporalmente para indicar que se ha copiado
+            var botonCopiar = document.getElementById("btnAnginity");
+            botonCopiar.textContent = "Copiado!";
+
+            // Restaurar el texto del botón después de un breve período
+            setTimeout(function () {
+                botonCopiar.textContent = "Copiar";
+            }, 2000); // Cambia este valor si deseas que el mensaje se muestre durante más o menos tiempo
+        }
+    </script>
+</body>
+
+</html>

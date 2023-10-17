@@ -71,7 +71,7 @@
     <script>
         function mostrarResultadoSQL() {
             var entrada = document.getElementById("inSQL").value;
-            var res = textoAStringConComas(entrada)
+            var res = textoAStringConComas(entrada).toUpperCase();
             document.getElementById("resultadoSQL").value = res;
         }
         function mostrarResultadoSQLTXT() {

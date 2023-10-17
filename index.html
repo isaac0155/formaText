@@ -71,12 +71,12 @@
     <script>
         function mostrarResultadoSQL() {
             var entrada = document.getElementById("inSQL").value;
-            var res = textoAStringConComas(entrada).toUpperCase();
+            var res = textoAStringConComas(entrada)
             document.getElementById("resultadoSQL").value = res;
         }
         function mostrarResultadoSQLTXT() {
             var entrada = document.getElementById("inSQL").value;
-            var res = separarPorLinea(entrada)
+            var res = separarPorLinea(entrada).toUpperCase();
             document.getElementById("resultadoSQL").value = res;
         }
         function borrarResSQL() {
